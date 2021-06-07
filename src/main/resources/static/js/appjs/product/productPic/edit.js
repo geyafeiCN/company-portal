@@ -1,4 +1,18 @@
 $().ready(function() {
+    //开启富文本编辑器
+    $('.summernote').summernote({
+        height : '220px',
+        lang : 'zh-CN',
+        callbacks: {
+            onImageUpload: function(files, editor, $editable) {
+                console.log("onImageUpload");
+                sendFile(files);
+            }
+        }
+    });
+    var content = $("#content").val();
+    alert(content);
+    $('#content_sn').summernote('code', content);
 	validateRule();
 });
 
@@ -8,6 +22,8 @@ $.validator.setDefaults({
 	}
 });
 function update() {
+    var content_sn = $("#content_sn").summernote('code');
+    $("#content").val(content_sn);
 	$.ajax({
 		cache : true,
 		type : "POST",
