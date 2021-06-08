@@ -1,25 +1,20 @@
 package com.bootdo.common.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.bootdo.common.service.GeneratorService;
 import com.bootdo.common.utils.GenUtils;
 import com.bootdo.common.utils.R;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RequestMapping("/common/aboutconfig")
 @Controller
 public class AboutInfoConfigController {
@@ -63,7 +58,9 @@ public class AboutInfoConfigController {
 	R update(@RequestParam Map<String, Object> map) {
 		try {
 			PropertiesConfiguration conf = new PropertiesConfiguration("aboutus.properties");
+			log.info(">>>>>>>>>>>>>>>bashPath为:"+conf.getBasePath()+"<<<<<<<<<<<<<<<<<<<<<");
 			String type=map.get("type").toString();
+			log.info(">>>>>>>>>>>>>>type值为:"+type+"<<<<<<<<<<<<<<<<<<<<<");
 			if (type.equals("1")) {
 				// 公司简介
 				conf.setProperty("company_profile_title", map.get("title"));
@@ -83,6 +80,8 @@ public class AboutInfoConfigController {
 				conf.setProperty("business_philosophy_origin", map.get("origin"));
 				conf.setProperty("business_philosophy_content", map.get("content"));
 			}
+			URL url = conf.getURL();
+			log.info(">>>>>>>>>>>>>>url:"+url+">>>>>>>>>>>>>>>>>>");
 			conf.save();
 		} catch (ConfigurationException e) {
 			return R.error("保存配置文件出错");

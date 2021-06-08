@@ -11,7 +11,6 @@ $().ready(function() {
         }
     });
     var content = $("#content").val();
-    alert(content);
     $('#content_sn').summernote('code', content);
 	validateRule();
 });

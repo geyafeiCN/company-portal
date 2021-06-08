@@ -1,5 +1,5 @@
 bootdo:
-  uploadPath: c:/var/uploaded_files/
+  uploadPath: /java/uploaded_files/
   username: admin
   password: 111111
 logging:
@@ -12,7 +12,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/admin1?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
     username: root
-    password: yss300377
+    password: root
     initialSize: 1
     minIdle: 3
     maxActive: 20
@@ -36,7 +36,7 @@ spring:
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
   redis:
-    host: 127.0.0.1
+    host: 39.101.162.199
     port: 6379
     password: redis123
     # 连接超时时间（毫秒）
