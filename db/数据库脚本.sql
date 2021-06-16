@@ -1561,3 +1561,15 @@ INSERT INTO `sys_user_role` VALUES ('125', '132', '52');
 INSERT INTO `sys_user_role` VALUES ('126', '132', '49');
 INSERT INTO `sys_user_role` VALUES ('127', '123', '48');
 INSERT INTO `sys_user_role` VALUES ('132', '36', '48');
+
+DROP TABLE IF EXISTS `a_aboutinfoconfig`;
+CREATE TABLE `a_aboutinfoconfig` (
+  `type` varchar(10) DEFAULT NULL COMMENT '类型',
+  `title` varchar(100) COMMENT '名称',
+  `author` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '作者',
+  `origin` int(100) DEFAULT NULL COMMENT '来源',
+  `content` text DEFAULT NULL COMMENT '内容'
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 COMMENT='公司信息';
+INSERT INTO `a_aboutinfoconfig` VALUES ('1','公司简介','YaoLL','益纯科仪科技','益纯科仪科技公司简介' );
+INSERT INTO `a_aboutinfoconfig` VALUES ('2','企业文化','YaoLL','益纯科仪科技','益纯科仪科技企业文化' );
+INSERT INTO `a_aboutinfoconfig` VALUES ('3','经营理念','YaoLL','益纯科仪科技','益纯科仪科技经营理念' );

@@ -1,25 +1,23 @@
 package com.bootdo.home.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bootdo.article.domain.NewsDO;
 import com.bootdo.article.service.NewsService;
-import com.bootdo.common.utils.DateUtils;
+import com.bootdo.common.domain.AboutInfoConfigDO;
+import com.bootdo.common.service.AboutInfoConfigService;
 import com.bootdo.common.utils.GenUtils;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
+import com.bootdo.common.utils.StringUtils;
 import com.bootdo.indexpic.domain.IndexPicDO;
 import com.bootdo.indexpic.service.IndexPicService;
 import com.bootdo.product.domain.ProductPicDO;
 import com.bootdo.product.service.ProductPicService;
 import com.bootdo.system.service.UserService;
-
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +36,9 @@ public class HomeController {
 	private UserService userService;
 	@Autowired
 	private IndexPicService indexPicService;
+
+	@Autowired
+	private AboutInfoConfigService aboutInfoConfigService;
 
 	@GetMapping("/home")
 	String home(Model model) {
@@ -79,6 +80,13 @@ public class HomeController {
 		Map<String, Object> params3 = SetParams(1, 6);
 		List<ProductPicDO> productList=productPicService.list(params3);
 		model.addAttribute("productList", productList);
+		//公司简介
+		AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("1");
+		String content = aboutInfoConfigDO.getContent();
+		if (StringUtils.isNotEmpty(content)){
+			String newContent = content.substring(0, 110);
+			model.addAttribute("newContent", newContent);
+		}
 		return "index/index";
 	}
 
@@ -123,6 +131,14 @@ public class HomeController {
 		Map<String, Object> params3 = SetParams(1, 6);
 		List<ProductPicDO> productList=productPicService.list(params3);
 		model.addAttribute("productList", productList);
+		//公司简介
+		AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("1");
+		String content = aboutInfoConfigDO.getContent();
+		if (StringUtils.isNotEmpty(content)){
+			String newContent = content.substring(0, 110);
+			model.addAttribute("newContent", newContent);
+		}
+
 		return "index/index";
 	}
 
@@ -133,27 +149,54 @@ public class HomeController {
 		Map<String, Object> pageinfo = new HashMap<>(16);
 		if (type==1) {
 			//公司简介
+/*
 			pageinfo.put("title", conf.getProperty("company_profile_title"));
 			pageinfo.put("author", conf.getProperty("company_profile_author"));
 			pageinfo.put("origin", conf.getProperty("company_profile_origin"));
 			pageinfo.put("content", conf.getProperty("company_profile_content"));
+*/
+
+			AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("1");
+			pageinfo.put("title", aboutInfoConfigDO.getTitle());
+			pageinfo.put("author", aboutInfoConfigDO.getAuthor());
+			pageinfo.put("origin", aboutInfoConfigDO.getOrigin());
+			pageinfo.put("content", aboutInfoConfigDO.getContent());
 		}else if (type==2) {
 			//企业文化
-			pageinfo.put("title", conf.getProperty("company_culture_title"));
+	/*		pageinfo.put("title", conf.getProperty("company_culture_title"));
 			pageinfo.put("author", conf.getProperty("company_culture_author"));
 			pageinfo.put("origin", conf.getProperty("company_culture_origin"));
 			pageinfo.put("content", conf.getProperty("company_culture_content"));
+*/
+			AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("2");
+			pageinfo.put("title", aboutInfoConfigDO.getTitle());
+			pageinfo.put("author", aboutInfoConfigDO.getAuthor());
+			pageinfo.put("origin", aboutInfoConfigDO.getOrigin());
+			pageinfo.put("content", aboutInfoConfigDO.getContent());
 		}else if (type==3) {
 			//经营理念
-			pageinfo.put("title", conf.getProperty("business_philosophy_title"));
+		/*	pageinfo.put("title", conf.getProperty("business_philosophy_title"));
 			pageinfo.put("author", conf.getProperty("business_philosophy_author"));
 			pageinfo.put("origin", conf.getProperty("business_philosophy_origin"));
-			pageinfo.put("content", conf.getProperty("business_philosophy_content"));
+			pageinfo.put("content", conf.getProperty("business_philosophy_content"));*/
+			AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("3");
+			pageinfo.put("title", aboutInfoConfigDO.getTitle());
+			pageinfo.put("author", aboutInfoConfigDO.getAuthor());
+			pageinfo.put("origin", aboutInfoConfigDO.getOrigin());
+			pageinfo.put("content", aboutInfoConfigDO.getContent());
 		}else{//默认简介
+/*
 			pageinfo.put("title", conf.getProperty("company_profile_title"));
 			pageinfo.put("author", conf.getProperty("company_profile_author"));
 			pageinfo.put("origin", conf.getProperty("company_profile_origin"));
 			pageinfo.put("content", conf.getProperty("company_profile_content"));
+*/
+
+			AboutInfoConfigDO aboutInfoConfigDO = aboutInfoConfigService.get("1");
+			pageinfo.put("title", aboutInfoConfigDO.getTitle());
+			pageinfo.put("author", aboutInfoConfigDO.getAuthor());
+			pageinfo.put("origin", aboutInfoConfigDO.getOrigin());
+			pageinfo.put("content", aboutInfoConfigDO.getContent());
 		}
 		model.addAttribute("pageinfo", pageinfo);
 		setPageInfo(model);
@@ -298,4 +341,11 @@ public class HomeController {
 		
 		return model;
 	}
+
+
+	@GetMapping("/map.html")
+	public String map(Model model) {
+		return "index/map";
+	}
+
 }
