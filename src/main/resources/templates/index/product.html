@@ -108,7 +108,7 @@
             <ul>
               <li th:each="productinfo : ${productList}"><a th:href="'showproduct.html?id='+${productinfo.cid}">
                 <div class="prod_con_list">
-                  <h1><img th:src="${productinfo.pic}" width="185px" height="133px"/></h1>
+                  <h1><img th:src="${productinfo.pic}" width="185px" height="101px"/></h1>
                   <dl>
                     <dd th:text="'·产品名称：'+${productinfo.title}">·产品名称：方尽快打卡</dd>
                     <dd th:text="'·产品型号：'+${productinfo.type}">·产品型号：BT-018</dd>
